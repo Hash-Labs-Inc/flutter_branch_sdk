@@ -225,6 +225,9 @@ public class FlutterBranchSdkPlugin implements FlutterPlugin, MethodCallHandler,
             case "trackContentWithoutBuo":
                 trackContentWithoutBuo(call);
                 break;
+            case "setRequestMetadata":
+                setRequestMetadata(call);
+                break;
             case "setIdentity":
                 setIdentity(call);
                 break;
@@ -437,6 +440,15 @@ public class FlutterBranchSdkPlugin implements FlutterPlugin, MethodCallHandler,
         HashMap<String, Object> argsMap = (HashMap<String, Object>) call.arguments;
         BranchEvent event = branchSdkHelper.convertToEvent((HashMap<String, Object>) argsMap.get("event"));
         event.logEvent(context);
+    }
+
+    private void setRequestMetadata(MethodCall call) {
+        if (!(call.arguments instanceof Map)) {
+            throw new IllegalArgumentException("Map argument expected");
+        }
+        String key = call.argument("key");
+        String value = call.argument("value");
+        Branch.getInstance(context).setRequestMetadata(key, value);
     }
 
     private void setIdentity(MethodCall call) {

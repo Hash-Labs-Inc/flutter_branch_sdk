@@ -125,6 +125,9 @@ public class SwiftFlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStream
         case "trackContentWithoutBuo":
             trackContentWithoutBuo(call: call)
             break
+        case "setRequestMetadata":
+            setRequestMetadata(call: call)
+            break
         case "setIdentity":
             setIdentity(call: call)
             break
@@ -229,6 +232,13 @@ public class SwiftFlutterBranchSdkPlugin: NSObject, FlutterPlugin, FlutterStream
         let eventDict = args["event"] as! [String: Any?]
         let event: BranchEvent? = convertToEvent(dict : eventDict)
         event!.logEvent()
+    }
+    
+    private func setRequestMetadata(call: FlutterMethodCall) {
+        let args = call.arguments as! [String: Any?]
+        let key = args["key"] as! String
+        let value = args["value"] as! String
+        Branch.getInstance().setRequestMetadataKey(key, value: value)
     }
     
     private func registerView(call: FlutterMethodCall) {

@@ -178,6 +178,16 @@ class FlutterBranchSdk {
     _messageChannel.invokeMethod('trackContentWithoutBuo', _params);
   }
 
+  ///Set request metadata
+  static void setRequestMetadata(String key, {String value}) {
+
+    if (key?.isEmpty ?? true) {
+      throw ArgumentError('key is required');
+    }
+    final _params = <String, dynamic>{ 'key': key, 'value': value };
+    _messageChannel.invokeMethod('setRequestMetadata', _params);
+  }
+
   ///Mark the content referred by this object as viewed. This increment the view count of the contents referred by this object.
   static void registerView({@required BranchUniversalObject buo}) {
     if (buo == null) {
